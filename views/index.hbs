@@ -1,0 +1,13 @@
+<div class="header">
+    <h2>Music Search</h2>
+</div>    
+<div class="music-form">
+    <form action="/search" method="post">
+        <input type="text" name="artist">
+        <input type="text" name="songTitle">
+        <select name="genres" id="genre">
+            <option value={{output}}></option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+</div>
