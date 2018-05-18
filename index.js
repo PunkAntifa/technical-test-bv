@@ -89,8 +89,8 @@ router.get('/search/:arguments', function(req, res, next){
             final_result.push(song_query_result);
             final_result.push(genre_query_result);
             
-            //Rendering the json in the view
-            res.render('search', {output: JSON.stringify(final_result)});      
+            //Rendering the json on page
+            res.json(final_result);  
         });
         
     });            
