@@ -1,3 +1,4 @@
+//Set requirements
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
@@ -5,10 +6,8 @@ var hbs = require('express-handlebars');
 var handlebars = require('handlebars');
 var helpers = require('just-handlebars-helpers');
 
-
 var routes = require('./index');
 helpers.registerHelpers(handlebars);
-
 
 var app = express();
 
@@ -21,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/', routes);
 app.use(express.static('.'));
 
+//App run
 app.listen(3000,function(){
     console.log("Listening on PORT 3000");
 });
