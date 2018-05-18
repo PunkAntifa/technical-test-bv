@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', routes);
+app.use(express.static('.'));
 
 app.listen(3000,function(){
     console.log("Listening on PORT 3000");
