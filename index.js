@@ -45,13 +45,12 @@ router.get('/search/:arguments', function(req, res, next){
 
     var song_query_result = {'bySong':[]};
     var songs_by_title_db_query = 
-        "SELECT Songs.title as Song, Songs.artist as Artist, Songs.duration as Duration, Genres.name as Genre from Songs INNER JOIN Genres on Genres.id = Songs.genre WHERE Songs.title LIKE ?";
-        
+        "SELECT Songs.title as Song, Songs.artist as Artist, Songs.duration as Duration, Genres.name as Genre from Songs INNER JOIN Genres on Genres.id = Songs.genre WHERE Songs.title LIKE ?";        
     
     var genre_query_result = {'byGenre':[]};
     var songs_by_genre_db_query = 
         "SELECT Songs.title as Song, Songs.artist as Artist, Songs.duration as Duration, SelectedId.name as Genre from Songs INNER JOIN (SELECT id, name FROM Genres where name = ?) AS SelectedId ON SelectedId.id = Songs.genre"
-
+        
     //***********************************************************
     //*** Query execution                                       *
     //*** Json creation                                         *
@@ -91,8 +90,7 @@ router.get('/search/:arguments', function(req, res, next){
             
             //Rendering the json on page
             res.json(final_result);  
-        });
-        
+        });        
     });            
 });
 
