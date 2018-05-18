@@ -19,6 +19,7 @@ var genres = [];
 router.get('/',function(req, res, next){
     //Prepare genres data in json formar
     let data = [];
+    data.push({'value': 'void', 'text': ''});
     for (var i = 0; i < genres.length; i++){
         data.push({'value': genres[i], 'text': genres[i]});
     }
