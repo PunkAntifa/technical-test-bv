@@ -2,8 +2,13 @@ var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
 var hbs = require('express-handlebars');
+var handlebars = require('handlebars');
+var helpers = require('just-handlebars-helpers');
+
 
 var routes = require('./index');
+helpers.registerHelpers(handlebars);
+
 
 var app = express();
 
