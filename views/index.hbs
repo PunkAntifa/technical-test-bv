@@ -3,8 +3,9 @@
 </div>    
 <div class="music-form">
     <form action="/search" method="post">
-        <input type="text" name="artist">
-        <input type="text" name="songTitle">
+        <input type="text" placeholder="Artist" name="artist">
+        <input type="text" placeholder="Title" name="songTitle">
+        <label for="genre">Genre</label>
         <select name="genres" id="genre">    
             {{{options data id="value" text="text"}}}
         </select>
