@@ -94,6 +94,34 @@ router.get('/search/:arguments', function(req, res, next){
     });            
 });
 
+router.get('/getGenresData', function(req, res, next){
+    //***********************************************************
+    //*** GetGenres Query declaration                              *
+    //*** Json structure initialization                         *
+    //***********************************************************
+    var genres_query_result = {'songs':[]};
+    var get_all_genres_db_query =         
+        "SELECT AllGenres.name as Genre, COUNT(Songs.title) as SongsNumber, SUM(Songs.duration) as SongsDuration from (SELECT id, name from Genres) as AllGenres LEFT JOIN Songs ON AllGenres.id = Songs.genre GROUP BY AllGenres.name";
+    
+    //***********************************************************
+    //*** Query execution                                       *
+    //*** Json creation                                         *
+    //***********************************************************        
+    db.serialize(function() {
+        db.all(get_all_genres_db_query, [], function(err, rows) {
+            if (err) {
+                throw err;
+            }
+            rows.forEach(function(row) {
+                genres_query_result.songs.push({ 'genre': row.Genre, 'songsNumber': row.SongsNumber, 'songsDuration': row.SongsDuration });
+            });
+
+            //Rendering the json on page
+            res.json(genres_query_result);
+        });
+    });
+});
+
 router.post('/search', function(req, res, next){
     var artist = req.body.artist;
     var songTitle = req.body.songTitle;
