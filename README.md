@@ -1,6 +1,8 @@
 # technical-test-bv
 Repository for Been Verified technical test
 
+    Note: Additional questions answers are located on a file in /doc/Questions BV.pdf  
+
 ## App Installation
 This app has been created with Nodejs, Express and Sqlite3.
 
