@@ -94,11 +94,77 @@ router.get('/search/:arguments', function(req, res, next){
     });            
 });
 
+router.get('/getGenresData', function(req, res, next){
+    //***********************************************************
+    //*** GetGenres Query declaration                              *
+    //*** Json structure initialization                         *
+    //***********************************************************
+    var genres_query_result = {'songs':[]};
+    var get_all_genres_db_query =         
+        "SELECT AllGenres.name as Genre, COUNT(Songs.title) as SongsNumber, SUM(Songs.duration) as SongsDuration from (SELECT id, name from Genres) as AllGenres LEFT JOIN Songs ON AllGenres.id = Songs.genre GROUP BY AllGenres.name";
+    
+    //***********************************************************
+    //*** Query execution                                       *
+    //*** Json creation                                         *
+    //***********************************************************        
+    db.serialize(function() {
+        db.all(get_all_genres_db_query, [], function(err, rows) {
+            if (err) {
+                throw err;
+            }
+            rows.forEach(function(row) {
+                genres_query_result.songs.push({ 'genre': row.Genre, 'songsNumber': row.SongsNumber, 'songsDuration': row.SongsDuration });
+            });
+
+            //Rendering the json on page
+            res.json(genres_query_result);
+        });
+    });
+});
+
+router.get('/getSongsByLenght/:arguments', function(req, res, next){
+    var search_keys = req.params.arguments;
+    search_keys = search_keys.split("&");
+    var min = search_keys[0];
+    var max = search_keys[1];
+    //***********************************************************
+    //*** GetGenres Query declaration                           *
+    //*** Json structure initialization                         *
+    //***********************************************************
+    var songs_query_result = {'songs':[]};
+    var get_songs_by_lenght_db_query =         
+    "SELECT Songs.title as Song, Songs.artist as Artist, Songs.duration as Duration, Genres.name as Genre from Songs INNER JOIN Genres on Genres.id = Songs.genre WHERE Songs.duration >= "+ min + " AND Songs.duration <= " + max;
+    
+    //***********************************************************
+    //*** Query execution                                       *
+    //*** Json creation                                         *
+    //***********************************************************
+    db.serialize(function() {
+        db.all(get_songs_by_lenght_db_query, [], function(err, rows) {
+            if (err) {
+                throw err;
+            }
+            rows.forEach(function(row) {
+                songs_query_result.songs.push({ 'song': row.Song, 'artist': row.Artist, 'duration': row.Duration, 'genre': row.Genre });
+            });
+
+            //Rendering the json on page
+            res.json(songs_query_result);
+        });
+    });                
+});
+
 router.post('/search', function(req, res, next){
     var artist = req.body.artist;
     var songTitle = req.body.songTitle;
     var genre = req.body.genres;
     res.redirect('/search/' + artist + '&' + songTitle + '&' + genre);
+});
+
+router.post('/searchByLenght', function(req, res, next){
+    var min = req.body.min;
+    var max = req.body.max;    
+    res.redirect('/getSongsByLenght/' + min + '&' + max);
 });
 
 //DB query - Get all genres and set data in genres array

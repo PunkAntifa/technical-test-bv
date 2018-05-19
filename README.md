@@ -1,6 +1,8 @@
 # technical-test-bv
 Repository for Been Verified technical test
 
+    Note: Additional questions answers are located on a file in /doc/Questions BV.pdf  
+
 ## App Installation
 This app has been created with Nodejs, Express and Sqlite3.
 
@@ -15,9 +17,12 @@ This app has been created with Nodejs, Express and Sqlite3.
 * Access to directory where the repository was cloned
 * Run: **npm install** (to verify all packages are done)
 * Execute application by running: **node app.js**
-* If show some **error** related with sqlite3, just run: **npm install sqlite3** and execute the application again
+* If show some **error** related with sqlite3, just run: **npm install sqlite3** and execute the application again. 
+
+        This error is generated if the Operative System is different to Windows (module on repository is for Windows). A Different module is used for Mac and Linux. Is for this reason, recomend install the module again in the machine who will run the app. 
+        
 * When the application is running, it display two messages on console: 
-* 
+
         Listening on PORT 3000
         Connected to the bvde database.
 
